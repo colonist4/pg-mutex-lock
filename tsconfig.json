@@ -1,0 +1,21 @@
+{
+    "compilerOptions": {
+        "module": "CommonJS",
+        "sourceMap": true,
+        "allowJs": true,
+        "resolveJsonModule": true,
+        "esModuleInterop": true,
+        "outDir": "./dist",
+        "target": "ES2017",
+        "baseUrl": "src",
+        "moduleResolution": "node",
+        "experimentalDecorators": true
+    },
+    "exclude": [
+        "node_modules",
+        "**/*.spec.ts"
+    ],
+    "include": [
+        "./src/**/*.ts"
+    ]
+}

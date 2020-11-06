@@ -1,0 +1,35 @@
+{
+  "name": "pg-mutex-lock",
+  "version": "1.0.0",
+  "description": "Mutex Lock using postgreSQL",
+  "main": "dist/index.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "pg": "^8.4.2"
+  },
+  "devDependencies": {
+    "@types/pg": "^7.14.6"
+  },
+  "scripts": {
+    "test": "ts-node test/index.ts",
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/colonist4/pg-mutex-lock.git"
+  },
+  "keywords": [
+    "postgreSQL",
+    "mutex",
+    "lock",
+    "advisory"
+  ],
+  "author": "Mun Seongjun (colonist4@gmail.com)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/colonist4/pg-mutex-lock/issues"
+  },
+  "homepage": "https://github.com/colonist4/pg-mutex-lock#readme"
+}

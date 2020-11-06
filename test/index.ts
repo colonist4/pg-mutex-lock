@@ -1,9 +1,6 @@
 import assert from 'assert';
 import PGMutexLock from "../src";
 
-
-process.env.PGHOST = 
-
 process.env.PGHOST = "127.0.0.1"
 process.env.PGPORT = "5432"
 process.env.PGDATABASE = "temp"

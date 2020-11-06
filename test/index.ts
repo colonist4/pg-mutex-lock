@@ -1,5 +1,5 @@
 import assert from 'assert';
-import PgMutexLock from "../src";
+import PGMutexLock from "../src";
 
 
 process.env.PGHOST = 
@@ -10,7 +10,7 @@ process.env.PGDATABASE = "temp"
 process.env.PGUSER = "admin"
 process.env.PGPASSWORD = "test"
 
-const mutexLock = new PgMutexLock();
+const mutexLock = new PGMutexLock();
 
 (async function main(){
     await lockWithSameKey()

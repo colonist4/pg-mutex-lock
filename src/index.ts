@@ -22,7 +22,7 @@ enum EVENTS {
     CONNECT_FAILED = "connect_failed"
 }
 
-export default class PgMutexLock {
+export default class PGMutexLock {
     private timeout: number;
     private retryCount: number;
     private client: Client;
@@ -99,15 +99,15 @@ export default class PgMutexLock {
         throw Error("Cannot acquire lock")
     }
 
-    async releaseLock(key: string){
+    async releaseLock(key: string): Promise<boolean>{
         let [classid, objid] = strToKey(key);
         await this.waitConnection();
 
-        await this.client.query(`
+        let res = await this.client.query(`
             SELECT pg_advisory_unlock($1, $2);
         `, [classid, objid]);
 
-        return;
+        return res.rows[0].pg_advisory_unlock;
     }
 
     end(){

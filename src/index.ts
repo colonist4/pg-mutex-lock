@@ -52,6 +52,10 @@ export default class PGMutexLock {
             console.error(err);
             this.emitter.emit(EVENTS.CONNECT_FAILED, err);
         })
+
+        this.end = this.end.bind(this)
+        this.acquireLock = this.acquireLock.bind(this)
+        this.releaseLock = this.releaseLock.bind(this)
     }
 
     private waitConnection(){

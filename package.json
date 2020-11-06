@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Mutex Lock using postgreSQL",
   "main": "dist/index.js",
+  "files": [
+    "dist"
+  ],
   "directories": {
     "test": "test"
   },

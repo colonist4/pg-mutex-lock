@@ -15,6 +15,7 @@
   "devDependencies": {
     "@types/pg": "^7.14.6"
   },
+  "bundledDependencies": false,
   "scripts": {
     "test": "ts-node test/index.ts",
     "build": "tsc"
@@ -29,8 +30,8 @@
     "lock",
     "advisory"
   ],
-  "author": "Mun Seongjun (colonist4@gmail.com)",
-  "license": "ISC",
+  "author": "Mun Seongjun <colonist4@gmail.com>",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/colonist4/pg-mutex-lock/issues"
   },

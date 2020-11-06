@@ -14,7 +14,6 @@ This is mutex lock implementation using postgres advisory lock feature.
 
 
 ## API
-<br>
 
 ### class PGMutexLock
 

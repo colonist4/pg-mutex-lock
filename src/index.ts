@@ -1,16 +1,11 @@
 import type { Client } from 'pg';
+import { parse } from 'pg-connection-string'
 import { createHash } from 'crypto';
 import { EventEmitter } from 'events';
 import { createClient } from './driver';
 
 type ConstructionOptions = {
-    database?: {
-        host?: string;
-        port?: number;
-        database?: string;
-        user?: string;
-        password?: string;
-    },
+    database?: ConstructorParameters<typeof Client>[0],
     /** timeout in milliseconds (default: 10 * 1000 ms) */
     timeout?: number;
     /** (default: 3) */
@@ -40,9 +35,22 @@ export default class PGMutexLock {
         this.timeout = timeout;
         this.retryCount = retryCount;
 
+        const dbName = (() => {
+            if(typeof database === 'string') {
+                return parse(database).database;
+            } else {
+                const { database: dbName, connectionString } = database || {};
+                return dbName || 
+                    (connectionString && parse(connectionString).database) ||
+                    process.env.PGDATABASE || 
+                    process.env.PGUSER || 
+                    process.env.USER;
+            }
+        })()
+
         this.client = createClient(database);
         this.client.connect()
-        .then(() => initTable(this.client, database.database || process.env.PGDATABASE))
+        .then(() => initTable(this.client, dbName))
         .then((oid) => {
             this.databaseId = oid;
             this.isConnected = true;
@@ -59,7 +67,7 @@ export default class PGMutexLock {
     }
 
     private waitConnection(){
-        return new Promise((resolve, reject)=>{
+        return new Promise<void>((resolve, reject)=>{
             if(this.isConnected) { resolve(); return; }
             this.emitter.once(EVENTS.CONNECTED, ()=>{
                 resolve();
@@ -119,7 +127,7 @@ export default class PGMutexLock {
     }
 }
 
-async function initTable(client: Client, databasename): Promise<number>{
+async function initTable(client: Client, databasename: string): Promise<number>{
     let res = await client.query(`
         SELECT oid from pg_database WHERE datname=$1;
     `, [databasename]);

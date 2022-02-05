@@ -35,9 +35,18 @@ export default class PGMutexLock {
         this.timeout = timeout;
         this.retryCount = retryCount;
 
-        const dbName = typeof database === 'string' ? 
-            parse(database).database :
-            database.database || process.env.PGDATABASE || process.env.USER;
+        const dbName = (() => {
+            if(typeof database === 'string') {
+                return parse(database).database;
+            } else {
+                const { database: dbName, connectionString } = database || {};
+                return dbName || 
+                    (connectionString && parse(connectionString).database) ||
+                    process.env.PGDATABASE || 
+                    process.env.PGUSER || 
+                    process.env.USER;
+            }
+        })()
 
         this.client = createClient(database);
         this.client.connect()

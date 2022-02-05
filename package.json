@@ -1,6 +1,6 @@
 {
   "name": "pg-mutex-lock",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Mutex Lock using postgreSQL",
   "main": "dist/index.js",
   "files": [
